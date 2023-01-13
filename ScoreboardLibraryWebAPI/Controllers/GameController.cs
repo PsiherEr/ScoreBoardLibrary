@@ -52,13 +52,13 @@ namespace ScoreboardLibraryWebAPI.Controllers
         public async Task<ActionResult<IEnumerable<Game>>> UpdateGame(int id, int team1Score, int team2Score, Status status)
         {
             await _repository.UpdateTheScore(id, team1Score, team2Score);
-            if (status == Status.Finish)
+            if (status == Status.Start && team1Score == 0 && team2Score == 0)
             {
-                await _repository.EndTheGame(id);
+                await _repository.StartTheGame(id);
             }
             else
             {
-                await _repository.StartTheGame(id);
+                await _repository.EndTheGame(id);
             }
             await _repository.SaveChangesAsync();
             var gameEntities = await _repository.GetGame(id);
