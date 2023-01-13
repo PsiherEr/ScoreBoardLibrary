@@ -41,6 +41,7 @@ namespace ScoreboardLibraryWebAPI.Controllers
             } else
             {
                 await _repository.StartTheGame(id);
+                await _repository.UpdateTheScore(id, 0, 0);
             }
             await _repository.SaveChangesAsync();
             var gameEntities = await _repository.GetGame(id);

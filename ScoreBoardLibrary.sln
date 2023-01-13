@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScoreboardLibrary", "Scoreb
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScoreboardLibrary.DAL", "ScoreboardLibrary.DAL\ScoreboardLibrary.DAL.csproj", "{94DB2DA4-7FC2-4D69-8A3A-973189197CD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScoreboardLibraryWebAPI", "ScoreboardLibraryWebAPI\ScoreboardLibraryWebAPI.csproj", "{2929374B-4785-4F7A-97E2-CC0BB875198E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScoreboardLibraryWebAPI", "ScoreboardLibraryWebAPI\ScoreboardLibraryWebAPI.csproj", "{2929374B-4785-4F7A-97E2-CC0BB875198E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScoreboardLibrary.Test", "ScoreboardLibrary.Test\ScoreboardLibrary.Test.csproj", "{1DED78AB-89D6-4173-A9E0-04A7F4513408}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{2929374B-4785-4F7A-97E2-CC0BB875198E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2929374B-4785-4F7A-97E2-CC0BB875198E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2929374B-4785-4F7A-97E2-CC0BB875198E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DED78AB-89D6-4173-A9E0-04A7F4513408}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DED78AB-89D6-4173-A9E0-04A7F4513408}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DED78AB-89D6-4173-A9E0-04A7F4513408}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DED78AB-89D6-4173-A9E0-04A7F4513408}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
