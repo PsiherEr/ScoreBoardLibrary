@@ -4,6 +4,8 @@ using ScoreboardLibrary.DAL.Entities;
 using ScoreboardLibrary.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ScoreboardLibrary.DAL.DBContext;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace ScoreboardLibraryWebAPI.Controllers
 {
@@ -27,6 +29,30 @@ namespace ScoreboardLibraryWebAPI.Controllers
         public async Task<ActionResult<IEnumerable<Game>>> GetGame(Status status)
         {
             var gameEntities = await _repository.GetGameByStatus(status);
+            return Ok(gameEntities);
+        }
+
+        [HttpPatch("{id}/{status}")]
+        public async Task<ActionResult<IEnumerable<Game>>> StatusChangeGame(int id, Status status)
+        {
+            if (status == Status.Finish)
+            {
+                await _repository.EndTheGame(id);
+            } else
+            {
+                await _repository.StartTheGame(id);
+            }
+            await _repository.SaveChangesAsync();
+            var gameEntities = await _repository.GetGame(id);
+            return Ok(gameEntities);
+        }
+
+        [HttpPatch("{id}/{team1Score}/{team2Score}")]
+        public async Task<ActionResult<IEnumerable<Game>>> UpdateGame(int id, int team1Score, int team2Score)
+        {
+            await _repository.UpdateTheScore(id, team1Score, team2Score);
+            await _repository.SaveChangesAsync();
+            var gameEntities = await _repository.GetGame(id);
             return Ok(gameEntities);
         }
     }
