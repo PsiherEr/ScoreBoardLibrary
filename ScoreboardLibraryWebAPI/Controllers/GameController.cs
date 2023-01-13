@@ -49,9 +49,17 @@ namespace ScoreboardLibraryWebAPI.Controllers
         }
 
         [HttpPatch("{id}/{team1Score}/{team2Score}")]
-        public async Task<ActionResult<IEnumerable<Game>>> UpdateGame(int id, int team1Score, int team2Score)
+        public async Task<ActionResult<IEnumerable<Game>>> UpdateGame(int id, int team1Score, int team2Score, Status status)
         {
             await _repository.UpdateTheScore(id, team1Score, team2Score);
+            if (status == Status.Finish)
+            {
+                await _repository.EndTheGame(id);
+            }
+            else
+            {
+                await _repository.StartTheGame(id);
+            }
             await _repository.SaveChangesAsync();
             var gameEntities = await _repository.GetGame(id);
             return Ok(gameEntities);
