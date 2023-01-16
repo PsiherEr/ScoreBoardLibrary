@@ -77,5 +77,18 @@ namespace ScoreboardLibrary.Test
             //Assert
             await Assert.ThrowsAsync<InvalidArgumentException>(() => sut.Object.EndTheGame(-1));
         }
+        //[Fact]
+        //public async void SortTheScore_returnSort()
+        //{
+        //    //Arrange
+        //    var sut = new Moq.Mock<IScoreboardRepository>();
+
+        //    //Act
+        //    sut.Setup(x => x.EndTheGame(-1))
+        //      .ThrowsAsync(new InvalidArgumentException());
+
+        //    //Assert
+        //    await Assert.ThrowsAsync<InvalidArgumentException>(() => sut.Object.EndTheGame(-1));
+        //}
     }
 }

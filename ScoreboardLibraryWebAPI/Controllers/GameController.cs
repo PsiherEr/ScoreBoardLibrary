@@ -32,6 +32,13 @@ namespace ScoreboardLibraryWebAPI.Controllers
             return Ok(gameEntities);
         }
 
+        [HttpGet("")]
+        public async Task<ActionResult<IEnumerable<Game>>> SortGames()
+        {
+            var gameEntities = await _repository.SortGames();
+            return Ok(gameEntities);
+        }
+
         [HttpPatch("{id}/{status}")]
         public async Task<ActionResult<Game>> StatusChangeGame(int id, Status status)
         {

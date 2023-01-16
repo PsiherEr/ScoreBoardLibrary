@@ -183,7 +183,18 @@ namespace ScoreboardLibrary.Repository
                 throw new InvalidArgumentException(e.Message);
             }
         }
-        
+        public async Task<IEnumerable<Game>> SortGames()
+        {
+            try
+            {
+                return await GameFilter.FilterByScore(_context.Games);
+            }
+            catch (Exception e)
+            {
+                throw new InvalidArgumentException(e.Message);
+            }
+        }
+
         public async Task<Game> GetGameByTeamNames(string team1Name, string team2Name)
         {
             return await GameFilter.FilterByTeamNames(_context.Games, team1Name, team2Name);
