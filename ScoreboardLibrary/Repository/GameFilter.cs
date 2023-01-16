@@ -13,5 +13,7 @@ namespace ScoreboardLibrary.Repository
     {
         public static async Task<IEnumerable<Game>> FilterByStatus(DbSet<Game> game, Status status) =>
             await game.Where(m => m.Status == status).ToArrayAsync();
+        public static async Task<Game> FilterByTeamNames(DbSet<Game> game, string team1Name, string team2Name) =>
+            await game.Where(m => m.Team1Name == team1Name && m.Team2Name == team2Name).FirstOrDefaultAsync();
     }
 }

@@ -18,7 +18,7 @@ namespace ScoreboardLibrary.Test
         {
             Game game = new Game { Team1Name = "Ukraine", Team2Name = "Kazahstan", Team1Score = 2, Team2Score = 3, Status = Status.Start };
             var sut = new Moq.Mock<IScoreboardRepository>();
-            sut.Setup(x => x.GetGameByStatus(It.IsAny<Status>())).ReturnsAsync(new List<Game> { game });
+            sut.Setup(x => x.GetGameByStatus(Status.Finish)).ReturnsAsync(new List<Game> { game });
 
             Assert.Contains(game, await sut.Object.GetGameByStatus(Status.Start));
         }
