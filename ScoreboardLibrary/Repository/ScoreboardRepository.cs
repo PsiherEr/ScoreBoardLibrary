@@ -13,6 +13,8 @@ using AutoMapper;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Http;
 
 namespace ScoreboardLibrary.Repository
 {
@@ -95,9 +97,10 @@ namespace ScoreboardLibrary.Repository
             }
         }
 
-        public async Task InputData(string team1, string team2, int team1Score, int team2Score, Status status)
+        public async Task InputData(string team1, string team2)
         {
-            if (team1 != null && team2 != null)
+            var a = await GetGameByTeamNames(team1, team2);
+            if (team1 != null && team2 != null && a == null)
             {
                 try
                 {
@@ -105,9 +108,9 @@ namespace ScoreboardLibrary.Repository
                     {
                         Team1Name = team1,
                         Team2Name = team2,
-                        Team1Score = team1Score,
-                        Team2Score = team2Score,
-                        Status = status
+                        Team1Score = 0,
+                        Team2Score = 0,
+                        Status = Status.Start
                     };
                     await _context.Games.AddAsync(game);
                     await _context.SaveChangesAsync();

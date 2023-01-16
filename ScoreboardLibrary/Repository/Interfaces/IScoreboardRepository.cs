@@ -18,7 +18,7 @@ namespace ScoreboardLibrary.Repository.Interfaces
         Task StartTheGame(int gameId);
         Task UpdateTheScore(int gameId, int team1Score, int team2Score);
         Task EndTheGame(int gameId);
-        Task InputData(string team1Name, string team2Name, int team1Score, int team2Score, Status status);
+        Task InputData(string team1Name, string team2Name);
         Task RemoveData(int id);
         Task<Game> GetGame(int gameId);
         Task<bool> SaveChangesAsync();
