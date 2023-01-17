@@ -32,8 +32,15 @@ namespace ScoreboardLibraryWebAPI.Controllers
             return Ok(gameEntities);
         }
 
+        [HttpGet("")]
+        public async Task<ActionResult<IEnumerable<Game>>> SortGames()
+        {
+            var gameEntities = await _repository.SortGames();
+            return Ok(gameEntities);
+        }
+
         [HttpPatch("{id}/{status}")]
-        public async Task<ActionResult<IEnumerable<Game>>> StatusChangeGame(int id, Status status)
+        public async Task<ActionResult<Game>> StatusChangeGame(int id, Status status)
         {
             if (status == Status.Finish)
             {
@@ -44,12 +51,12 @@ namespace ScoreboardLibraryWebAPI.Controllers
                 await _repository.UpdateTheScore(id, 0, 0);
             }
             await _repository.SaveChangesAsync();
-            var gameEntities = await _repository.GetGame(id);
-            return Ok(gameEntities);
+            var gameEntity = await _repository.GetGame(id);
+            return Ok(gameEntity);
         }
 
         [HttpPatch("{id}/{team1Score}/{team2Score}")]
-        public async Task<ActionResult<IEnumerable<Game>>> UpdateGame(int id, int team1Score, int team2Score, Status status)
+        public async Task<ActionResult<Game>> UpdateGame(int id, int team1Score, int team2Score, Status status)
         {
             await _repository.UpdateTheScore(id, team1Score, team2Score);
             if (status == Status.Start && team1Score == 0 && team2Score == 0)
@@ -61,8 +68,32 @@ namespace ScoreboardLibraryWebAPI.Controllers
                 await _repository.EndTheGame(id);
             }
             await _repository.SaveChangesAsync();
-            var gameEntities = await _repository.GetGame(id);
-            return Ok(gameEntities);
+            var gameEntity = await _repository.GetGame(id);
+            return Ok(gameEntity);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<IEnumerable<Game>>> RemoveData(int id)
+        {
+            if (await _repository.GetGame(id) != null)
+            {
+                await _repository.RemoveData(id);
+                var gameEntities = await _repository.GetAllGames();
+                return Ok(gameEntities);
+            }
+            else
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            
+        }
+
+        [HttpPost("{team1Name}/{team2Name}")]
+        public async Task<ActionResult<Game>> InputData(string team1Name, string team2Name)
+        {
+            await _repository.InputData(team1Name, team2Name);
+            var gameEntity = await _repository.GetGameByTeamNames(team1Name, team2Name);
+            return Ok(gameEntity);
         }
     }
 }

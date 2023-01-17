@@ -18,7 +18,7 @@ namespace ScoreboardLibrary.Test
         {
             Game game = new Game { Team1Name = "Ukraine", Team2Name = "Kazahstan", Team1Score = 2, Team2Score = 3, Status = Status.Start };
             var sut = new Moq.Mock<IScoreboardRepository>();
-            sut.Setup(x => x.GetGameByStatus(It.IsAny<Status>())).ReturnsAsync(new List<Game> { game });
+            sut.Setup(x => x.GetGameByStatus(Status.Finish)).ReturnsAsync(new List<Game> { game });
 
             Assert.Contains(game, await sut.Object.GetGameByStatus(Status.Start));
         }
@@ -77,5 +77,29 @@ namespace ScoreboardLibrary.Test
             //Assert
             await Assert.ThrowsAsync<InvalidArgumentException>(() => sut.Object.EndTheGame(-1));
         }
+        [Fact]
+        public async void DataInputTest()
+        {
+            var sut = new Moq.Mock<IScoreboardRepository>();
+            var game = new Game { Team1Name = "Ukraine", Team2Name = "Kazahstan", Team1Score = 0, Team2Score = 0, Status = Status.Finish };
+
+
+            sut.Setup(x => x.InputData("Ukraine", "Kazahstan")).Equals(new Game { Team1Name = "Ukraine", Team2Name = "Kazahstan", Team1Score = 0, Team2Score = 0, Status = Status.Finish });
+
+            Assert.Contains(game, await sut.Object.GetGameByStatus(Status.Start));
+        }
+        //[Fact]
+        //public async void SortTheScore_returnSort()
+        //{
+        //    //Arrange
+        //    var sut = new Moq.Mock<IScoreboardRepository>();
+
+        //    //Act
+        //    sut.Setup(x => x.EndTheGame(-1))
+        //      .ThrowsAsync(new InvalidArgumentException());
+
+        //    //Assert
+        //    await Assert.ThrowsAsync<InvalidArgumentException>(() => sut.Object.EndTheGame(-1));
+        //}
     }
 }
