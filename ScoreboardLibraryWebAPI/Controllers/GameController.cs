@@ -78,7 +78,6 @@ namespace ScoreboardLibraryWebAPI.Controllers
             if (await _repository.GetGame(id) != null)
             {
                 await _repository.RemoveData(id);
-                await _repository.SaveChangesAsync();
                 var gameEntities = await _repository.GetAllGames();
                 return Ok(gameEntities);
             }
@@ -89,11 +88,10 @@ namespace ScoreboardLibraryWebAPI.Controllers
             
         }
 
-        [HttpPut("{team1Name}/{team2Name}")]
+        [HttpPost("{team1Name}/{team2Name}")]
         public async Task<ActionResult<Game>> InputData(string team1Name, string team2Name)
         {
             await _repository.InputData(team1Name, team2Name);
-            await _repository.SaveChangesAsync();
             var gameEntity = await _repository.GetGameByTeamNames(team1Name, team2Name);
             return Ok(gameEntity);
         }

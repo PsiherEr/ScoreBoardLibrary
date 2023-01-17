@@ -77,6 +77,17 @@ namespace ScoreboardLibrary.Test
             //Assert
             await Assert.ThrowsAsync<InvalidArgumentException>(() => sut.Object.EndTheGame(-1));
         }
+        [Fact]
+        public async void DataInputTest()
+        {
+            var sut = new Moq.Mock<IScoreboardRepository>();
+            var game = new Game { Team1Name = "Ukraine", Team2Name = "Kazahstan", Team1Score = 0, Team2Score = 0, Status = Status.Finish };
+
+
+            sut.Setup(x => x.InputData("Ukraine", "Kazahstan")).Equals(new Game { Team1Name = "Ukraine", Team2Name = "Kazahstan", Team1Score = 0, Team2Score = 0, Status = Status.Finish });
+
+            Assert.Contains(game, await sut.Object.GetGameByStatus(Status.Start));
+        }
         //[Fact]
         //public async void SortTheScore_returnSort()
         //{
